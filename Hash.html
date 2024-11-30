@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Hashing - Jackpiro</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid red;
+            border-radius: 10px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        input[type="button"] {
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: darkred;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            resize: none;
+        }
+
+        .result {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>File Hashing (SHA-1)</h1>
+
+        <!-- File Input -->
+        <input type="file" id="fileInput" accept=".txt,.pdf,.docx" />
+
+        <!-- Display Generated Hash -->
+        <textarea id="hashOutput" readonly placeholder="Generated Hash will appear here..."></textarea>
+
+        <!-- Copy Hash Button -->
+        <input type="button" value="Copy Hash" onclick="copyToClipboard()" />
+
+        <!-- Hash Comparison -->
+        <input type="text" id="hashCompare" placeholder="Enter a hash to compare" />
+        <input type="button" value="Compare Hashes" onclick="compareHashes()" />
+
+        <!-- Result Display -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Handle file input
+        document.getElementById('fileInput').addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const content = e.target.result;
+                    generateSHA1(content);
+                };
+                reader.readAsArrayBuffer(file); // Read file as binary (ArrayBuffer)
+            }
+        });
+
+        // Function to generate SHA-1 hash
+        async function generateSHA1(content) {
+            const hashBuffer = await crypto.subtle.digest('SHA-1', content);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            document.getElementById('hashOutput').value = hashHex;
+        }
+
+        // Copy hash to clipboard
+        function copyToClipboard() {
+            const hashOutput = document.getElementById('hashOutput');
+            hashOutput.select();
+            document.execCommand('copy');
+            alert('Hash copied to clipboard!');
+        }
+
+        // Compare hashes
+        function compareHashes() {
+            const generatedHash = document.getElementById('hashOutput').value.trim();
+            const inputHash = document.getElementById('hashCompare').value.trim();
+            const resultElement = document.getElementById('result');
+
+            if (generatedHash && inputHash) {
+                if (generatedHash === inputHash) {
+                    resultElement.innerHTML = '<span style="color: green;">Hashes match!</span>';
+                } else {
+                    resultElement.innerHTML = '<span style="color: red;">Hashes do not match.</span>';
+                }
+            } else {
+                resultElement.innerHTML = '<span style="color: yellow;">Please provide both hashes.</span>';
+            }
+        }
+    </script>
+<script>
+    function copyToClipboard() {
+        const hashOutput = document.getElementById('hashOutput');
+        hashOutput.select();
+        document.execCommand('copy');
+
+        // Show custom styled message
+        const message = document.createElement('div');
+        message.innerText = 'Hash copied to clipboard!';
+        message.style.position = 'fixed';
+        message.style.top = '20px';
+        message.style.left = '50%';
+        message.style.transform = 'translateX(-50%)';
+        message.style.padding = '10px 20px';
+        message.style.backgroundColor = 'red';
+        message.style.color = 'white';
+        message.style.fontSize = '18px';
+        message.style.borderRadius = '5px';
+        message.style.boxShadow = '0 0 10px rgba(255, 0, 0, 0.7)';
+        message.style.zIndex = '1000';
+        message.style.animation = 'fadeOut 3s forwards';
+
+        document.body.appendChild(message);
+
+        // Remove the message after animation
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
+    }
+
+    // Add fadeOut animation
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            @keyframes fadeOut {
+                0% { opacity: 1; }
+                80% { opacity: 1; }
+                100% { opacity: 0; transform: translateY(-20px); }
+            }
+        </style>
+    `);
+</script>
+
+
+</body>
+
+</html>

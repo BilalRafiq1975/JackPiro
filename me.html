@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meet the Developer</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(to bottom, #000000, #880000);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* Header Styling */
+        header {
+            margin-top: 20px;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            padding: 10px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            color: #b71c1c;
+        }
+
+        /* Developer Section Styling */
+        .developer-section {
+            margin-top: 50px;
+        }
+
+        .developer-section img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .developer-section img:hover {
+            transform: scale(1.1);
+        }
+
+        .developer-section h2 {
+            font-size: 2.5em;
+            margin: 20px 0 10px;
+            color: #f0e68c;
+            text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8);
+        }
+
+        .developer-section p {
+            font-size: 1.2em;
+            color: #f8f9fa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Speech Bubble Styling */
+        .speech-bubble {
+            background: #b71c1c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 40px 0;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: background 0.5s ease;
+        }
+
+        .speech-bubble:hover {
+            background: #9a1b1b;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header Section -->
+    <header>
+        <h1>The Legends Behind the Code</h1>
+    </header>
+
+    <!-- Developer Section -->
+    <section class="developer-section">
+        <img src="images/We.jpg" alt="Developer Photo">
+        <h2>Bilal & Usama</h2>
+        <p>
+            Welcome to the treasure of cryptography! Meet Bilal & Usama, the masterminds behind this masterpiece. 🎉
+        </p>
+    </section>
+
+    <!-- Speech Bubble -->
+    <div class="speech-bubble">
+        "We swear it worked on our machine!"
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" autoplay loop>
+        <source src="audio/us.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Particle.js Script -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            }
+        });
+
+        // JavaScript workaround for autoplay policies
+        window.addEventListener('load', function () {
+            const music = document.getElementById('background-music');
+
+            // Attempt to play after load event
+            const playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay failed. User interaction needed.');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

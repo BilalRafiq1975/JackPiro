@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Captcha Verification</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #111;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(34, 34, 34, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            max-width: 400px;
+            margin: auto;
+            position: relative;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        h1 {
+            color: #e50914;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        #captcha-display {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #e50914;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            user-select: none;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c40812;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+
+        .success {
+            color: #00ff00;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        function generateRandomCaptcha() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return captcha;
+        }
+
+        function validateCaptcha() {
+            const displayedCaptcha = document.getElementById('captcha-display').innerText;
+            const userInput = document.getElementById('captcha-input').value.trim();
+            const resultMessage = document.getElementById('result');
+
+            if (md5(displayedCaptcha) === md5(userInput)) {
+                resultMessage.innerHTML = "Captcha verified successfully!";
+                resultMessage.className = "message success";
+                setTimeout(() => {
+                    window.location.href = 'me.html'; // Redirect after successful validation
+                }, 1000);
+            } else {
+                resultMessage.innerHTML = "Incorrect Captcha. Please try again.";
+                resultMessage.className = "message error";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('captcha-display').innerText = generateRandomCaptcha();
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#ffffff" },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": { "width": 0, "color": "#000" },
+                        "polygon": { "nb_sides": 5 }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true
+                    },
+                    "size": {
+                        "value": 5,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 3,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": { "enable": false }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "repulse" },
+                        "onclick": { "enable": true, "mode": "push" },
+                        "resize": true
+                    },
+                    "modes": {
+                        "repulse": { "distance": 100, "duration": 0.4 },
+                        "push": { "particles_nb": 4 }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
+        function md5(string) {
+            return CryptoJS.MD5(string).toString();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <h1>MD5 Captcha Verification</h1>
+        <p>Solve to know the developers</p>
+        <div id="captcha-display"></div>
+        <input type="text" id="captcha-input" placeholder="Enter the captcha">
+        <button onclick="validateCaptcha()">Verify Captcha</button>
+        <div id="result" class="message"></div>
+    </div>
+</body>
+
+</html>
