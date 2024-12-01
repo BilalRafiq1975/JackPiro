@@ -6,12 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Information Security</title>
     <style>
+        /* Body styling */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
             background-color: #000;
             color: #fff;
+            position: relative;
+            min-height: 100vh; /* Ensure the body is at least as tall as the viewport */
+            overflow: auto; /* Allow scrolling */
+        }
+
+        /* Particle.js container */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Keep particles behind everything */
         }
 
         /* Navigation Bar */
@@ -40,7 +54,9 @@
         .header {
             text-align: center;
             padding: 50px;
-            background-color: #000;
+            background-color: #000; /* Solid black background to separate from particle effect */
+            z-index: 1; /* Ensure header stays on top of particles */
+            position: relative; /* Allow z-index to work */
         }
 
         .header h1 {
@@ -121,6 +137,9 @@
 
 <body>
 
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
     <div class="header">
         <h1>Information Security</h1>
         <span>Learn and Explore Cryptographic Techniques for Securing Information</span>
@@ -157,6 +176,90 @@
     <div class="footer">
         <p>&copy; 2024 All Rights Reserved. Bilal</p>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "window",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
 
     <script>
         function goBack() {
